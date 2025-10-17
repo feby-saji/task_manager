@@ -4,7 +4,6 @@ class AppInitializer {
   static Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-
     // // local DB
     // await Hive.initFlutter();
 
