@@ -4,7 +4,7 @@ class UserProfile {
   final String id; // Supabase UID or local_guest
   final String? name;
   final String? email;
-  final DateTime lastSync;
+  final DateTime lastsyncedTime;
   final bool isGuest;
   final ThemeMode themeMode;
 
@@ -12,7 +12,7 @@ class UserProfile {
     required this.id,
     required this.themeMode,
     required this.isGuest,
-    required this.lastSync,
+    required this.lastsyncedTime,
     this.name,
     this.email,
   });

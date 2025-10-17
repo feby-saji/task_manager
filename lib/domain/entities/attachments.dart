@@ -5,6 +5,7 @@ class Attachment {
   final String taskId;
   final String? localPath; // null if only downloaded from remote
   final String? url; // null if not in supabse yet
+  final bool isDeleted;
   final AttachmentType type;
   final SyncPendingOps pendingOp;
 
@@ -13,6 +14,7 @@ class Attachment {
     required this.taskId,
     this.localPath,
     this.url,
+    this.isDeleted = false,
     required this.type,
     required this.pendingOp,
   });
