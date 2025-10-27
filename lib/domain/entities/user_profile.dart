@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class UserProfile {
-  final String id; // Supabase UID or local_guest
-  final String? name;
-  final String? email;
-  final DateTime lastSyncedTime;
-  final bool isGuest;
-  final ThemeMode themeMode;
+part 'user_profile.freezed.dart';
 
-  final String preferredLanguageCode; // e.g., 'en', 'es', 'fr'
-  UserProfile({
-    required this.id,
-    required this.themeMode,
-    required this.isGuest,
-    required this.lastSyncedTime,
-    this.preferredLanguageCode = 'en',
-    this.name,
-    this.email,
-  });
+@freezed
+abstract class UserProfile with _$UserProfile {
+  const factory UserProfile({
+    required String id, // Supabase UID or local_guest
+    String? name,
+    String? email,
+    required DateTime lastSyncedTime,
+    required bool isGuest,
+    required ThemeMode themeMode,
+    @Default('en') String preferredLanguageCode, // e.g., 'en', 'es', 'fr'
+  }) = _UserProfile;
 }

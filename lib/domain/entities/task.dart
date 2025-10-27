@@ -1,30 +1,22 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_manager/core/enums.dart';
 import 'package:task_manager/domain/entities/attachments.dart';
 
-class Task {
-  final String id;
-  final String userId;
-  final String title;
-  final String? description;
-  final DateTime? dueDate;
-  final TaskPriority priority;
-  final List<Attachment> attachments;
-  final bool completed;
-  final DateTime updatedAt;
-  final SyncPendingOps pendingOp;
-  final bool isDeleted;
+part 'task.freezed.dart';
 
-  Task({
-    required this.id,
-    required this.userId,
-    required this.title,
-    this.description,
-    this.dueDate,
-    required this.priority,
-    this.attachments = const [],
-    this.completed = false,
-    required this.pendingOp,
-    required this.updatedAt,
-    this.isDeleted = false,
-  });
+@freezed
+abstract class Task with _$Task {
+  const factory Task({
+    required String id,
+    required String userId,
+    required String title,
+    String? description,
+    DateTime? dueDate,
+    required TaskPriority priority,
+    @Default([]) List<Attachment> attachments,
+    @Default(false) bool completed,
+    required SyncPendingOps pendingOp,
+    required DateTime updatedAt,
+    @Default(false) bool isDeleted,
+  }) = _Task;
 }

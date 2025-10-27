@@ -1,21 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_manager/core/enums.dart';
 
-class Attachment {
-  final String id;
-  final String taskId;
-  final String? localPath; // null if only downloaded from remote
-  final String? url; // null if not in supabse yet
-  final bool isDeleted;
-  final AttachmentType type;
-  final SyncPendingOps pendingOp;
+part 'attachments.freezed.dart';
 
-  Attachment({
-    required this.id,
-    required this.taskId,
-    this.localPath,
-    this.url,
-    this.isDeleted = false,
-    required this.type,
-    required this.pendingOp,
-  });
+@freezed
+abstract class Attachment with _$Attachment {
+  const factory Attachment({
+    required String id,
+    required String taskId,
+    String? localPath, // null if only downloaded from remote
+    String? url, // null if not in supabse yet
+    @Default(false) bool isDeleted,
+    required AttachmentType type,
+    required SyncPendingOps pendingOp,
+  }) = _Attachment;
 }
