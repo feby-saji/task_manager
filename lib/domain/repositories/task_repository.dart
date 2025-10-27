@@ -5,6 +5,7 @@ import 'package:task_manager/domain/entities/task.dart';
 abstract class TaskRepository {
   Future<Task> createTask(Task task);
   Future<List<Task>> getAllTasks(String userId);
+  Future<Task> getTask(String taskId);
   Future<Task> updateTask(Task task);
   Future<void> markcompletedTask(String taskId);
 

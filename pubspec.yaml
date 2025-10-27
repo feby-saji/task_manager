@@ -41,13 +41,6 @@ dependencies:
   sqflite: ^2.2.0
   supabase_flutter: ^1.0.0
   path_provider: ^2.0.14
-  
-  freezed: ^3.2.3
-  freezed_annotation: 3.1.0  
-  
-
-  
-
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -55,7 +48,7 @@ dev_dependencies:
     sdk: flutter
   custom_lint:
   riverpod_lint:
-
+  build_runner:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
