@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppInitializer {
@@ -13,9 +14,8 @@ class AppInitializer {
     //   anonKey: 'YOUR_SUPABASE_ANON_KEY',
     // );
 
-    // Firebase (if needed)
-    // await Firebase.initializeApp();
 
     // Any other plugin
+    await EasyLocalization.ensureInitialized();
   }
 }
