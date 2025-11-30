@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:task_manager/core/enums.dart';
+import 'package:task_manager/core/utils/enums.dart';
 import 'package:task_manager/features/tasks/domain/entities/attachments.dart';
 
 part 'task.freezed.dart';

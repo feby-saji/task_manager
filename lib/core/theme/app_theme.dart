@@ -8,9 +8,9 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
   ThemeNotifier(this._ref) : super(ThemeMode.system) {
     _loadThemeMode();
   }
-  _loadThemeMode() {
+  _loadThemeMode() async{
     final db = _ref.read(localDbProvider);
-    state = db.getThemeMode();
+    state = await db.getThemeMode();
   }
   void changeTheme(ThemeMode themeMode) async{
   state = themeMode;

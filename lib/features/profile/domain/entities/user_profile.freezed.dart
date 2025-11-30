@@ -14,8 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfile {
 
- String get id;// Supabase UID or local_guest
- String? get name; String? get email; DateTime get lastSyncedTime; bool get isGuest; ThemeMode get themeMode; String get preferredLanguageCode;
+ String get uid;// Supabase UID
+ String? get name; String? get email; DateTime get lastSyncedTime; ThemeMode get themeMode; String get preferredLanguageCode;
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email,lastSyncedTime,isGuest,themeMode,preferredLanguageCode);
+int get hashCode => Object.hash(runtimeType,uid,name,email,lastSyncedTime,themeMode,preferredLanguageCode);
 
 @override
 String toString() {
-  return 'UserProfile(id: $id, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, isGuest: $isGuest, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
+  return 'UserProfile(uid: $uid, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UserProfileCopyWith<$Res>  {
   factory $UserProfileCopyWith(UserProfile value, $Res Function(UserProfile) _then) = _$UserProfileCopyWithImpl;
 @useResult
 $Res call({
- String id, String? name, String? email, DateTime lastSyncedTime, bool isGuest, ThemeMode themeMode, String preferredLanguageCode
+ String uid, String? name, String? email, DateTime lastSyncedTime, ThemeMode themeMode, String preferredLanguageCode
 });
 
 
@@ -63,14 +63,13 @@ class _$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? isGuest = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,lastSyncedTime: null == lastSyncedTime ? _self.lastSyncedTime : lastSyncedTime // ignore: cast_nullable_to_non_nullable
-as DateTime,isGuest: null == isGuest ? _self.isGuest : isGuest // ignore: cast_nullable_to_non_nullable
-as bool,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as DateTime,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -157,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  DateTime lastSyncedTime,  bool isGuest,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGuest,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
   return orElse();
 
 }
@@ -178,10 +177,10 @@ return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGue
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  DateTime lastSyncedTime,  bool isGuest,  ThemeMode themeMode,  String preferredLanguageCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile():
-return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGuest,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +197,10 @@ return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGue
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String? email,  DateTime lastSyncedTime,  bool isGuest,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGuest,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
   return null;
 
 }
@@ -213,15 +212,14 @@ return $default(_that.id,_that.name,_that.email,_that.lastSyncedTime,_that.isGue
 
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.id, this.name, this.email, required this.lastSyncedTime, required this.isGuest, required this.themeMode, this.preferredLanguageCode = 'en'});
+  const _UserProfile({required this.uid, this.name, this.email, required this.lastSyncedTime, required this.themeMode, this.preferredLanguageCode = 'en'});
   
 
-@override final  String id;
-// Supabase UID or local_guest
+@override final  String uid;
+// Supabase UID
 @override final  String? name;
 @override final  String? email;
 @override final  DateTime lastSyncedTime;
-@override final  bool isGuest;
 @override final  ThemeMode themeMode;
 @override@JsonKey() final  String preferredLanguageCode;
 
@@ -235,16 +233,16 @@ _$UserProfileCopyWith<_UserProfile> get copyWith => __$UserProfileCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email,lastSyncedTime,isGuest,themeMode,preferredLanguageCode);
+int get hashCode => Object.hash(runtimeType,uid,name,email,lastSyncedTime,themeMode,preferredLanguageCode);
 
 @override
 String toString() {
-  return 'UserProfile(id: $id, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, isGuest: $isGuest, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
+  return 'UserProfile(uid: $uid, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
 }
 
 
@@ -255,7 +253,7 @@ abstract mixin class _$UserProfileCopyWith<$Res> implements $UserProfileCopyWith
   factory _$UserProfileCopyWith(_UserProfile value, $Res Function(_UserProfile) _then) = __$UserProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? name, String? email, DateTime lastSyncedTime, bool isGuest, ThemeMode themeMode, String preferredLanguageCode
+ String uid, String? name, String? email, DateTime lastSyncedTime, ThemeMode themeMode, String preferredLanguageCode
 });
 
 
@@ -272,14 +270,13 @@ class __$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? isGuest = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
   return _then(_UserProfile(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,lastSyncedTime: null == lastSyncedTime ? _self.lastSyncedTime : lastSyncedTime // ignore: cast_nullable_to_non_nullable
-as DateTime,isGuest: null == isGuest ? _self.isGuest : isGuest // ignore: cast_nullable_to_non_nullable
-as bool,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as DateTime,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));

@@ -9,7 +9,7 @@ void main() async{
   await AppInitializer.initialize();
   runApp( ProviderScope(child:  EasyLocalization(
       supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
-      path: 'assets/translations', // <-- change the path of the translation files
+      path: 'assets/translations', 
       fallbackLocale: Locale('en', 'US'),
       startLocale : Locale('en', 'US'),
       child: MyApp()
