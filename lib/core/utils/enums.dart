@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
+enum AuthProvider {
+  google('google'),
+  apple('apple'),
+  guest('guest'),
+  email('email'),
+  unknown('unknown');
+
+  final String label;
+
+  const AuthProvider(this.label);
+}
+
 enum TaskPriority {
   low('Low', Colors.green),
   medium('Medium', Colors.orange),
@@ -38,15 +50,16 @@ enum ThemeModeDb {
   system('System');
 
   final String label;
+
   const ThemeModeDb(this.label);
 }
 
 enum LanguagePref {
   enUS('English (US)'),
-  hiIN('Hindi (IN)')
-  ;
+  hiIN('Hindi (IN)');
 
   final String label;
+
   const LanguagePref(this.label);
 }
 
@@ -56,6 +69,7 @@ enum EntityType {
   profile('Profile');
 
   final String label;
+
   const EntityType(this.label);
 }
 
@@ -65,5 +79,8 @@ enum PendingStatus {
   failed('Failed');
 
   final String label;
+
   const PendingStatus(this.label);
 }
+
+enum Tables { tasks, attachments, profile, pendingOperations }

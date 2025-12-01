@@ -5,12 +5,13 @@ part 'user_profile.freezed.dart';
 
 @freezed
 abstract class UserProfile with _$UserProfile {
-  const factory UserProfile({
-    required String uid, // Supabase UID
-    String? name,
-    String? email,
-    required DateTime lastSyncedTime,
-    required ThemeMode themeMode,
+  factory UserProfile({
+    required String userId,
+    required String? displayName,
+    required String? email,
+    required String? photoUrl,
     @Default('en') String preferredLanguageCode, // e.g., 'en', 'es', 'fr'
+    required ThemeMode themeMode,
+    required String? lastSync,
   }) = _UserProfile;
 }

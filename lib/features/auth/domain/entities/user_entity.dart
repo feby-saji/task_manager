@@ -1,10 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/utils/enums.dart';
+
 part 'user_entity.freezed.dart';
+
 @freezed
 abstract class AuthUser with _$AuthUser {
   const factory AuthUser({
-    required String uuid, // for guest user -> local_guest else Supabase UUID
-    required String email,
+    required userId,
+    required AuthProvider authProvider,
   }) = _AuthUser;
 }

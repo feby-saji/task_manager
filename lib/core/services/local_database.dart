@@ -5,11 +5,12 @@ import 'package:task_manager/core/utils/enums.dart';
 
 import '../utils/extensions.dart';
 
-final localDbProvider = Provider<LocalDbHelper>((_) {
-  return LocalDbHelper();
-});
+final Provider<LocalDatabaseService> localDbProvider =
+    Provider<LocalDatabaseService>((_) {
+      return LocalDatabaseService();
+    });
 
-class LocalDbHelper {
+class LocalDatabaseService {
   Database? _database;
   static const _databaseName = "task_flow.db";
   static const _databaseVersion = 1;
@@ -31,17 +32,19 @@ class LocalDbHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute('''CREATE TABLE profile (
+    // Note: We keep table names hardcoded in SQL for clarity,
+    // but they match Tables.x.tableName.
+    await db.execute('''CREATE TABLE ${Tables.profile.name} (
       user_uid TEXT PRIMARY KEY,
       email TEXT NOT NULL,
       name TEXT,
+      authProvider TEXT               -- enum: "google", "apple", "guest", "email"
       last_sync INTEGER,              -- timestamp in ms (UTC)
       theme_mode TEXT,                -- enum: "light", "dark", "system"
       language_pref TEXT              -- enum: "enUS", "hiIN", etc.
-      );'''
-    );
+      );''');
 
-    await db.execute('''CREATE TABLE tasks (
+    await db.execute('''CREATE TABLE ${Tables.tasks.name} (
       task_id TEXT PRIMARY KEY,       -- eg: task_uuid
       user_uid TEXT NOT NULL,          -- FK → profile(user_uid)
 
@@ -54,10 +57,10 @@ class LocalDbHelper {
       created_at INTEGER NOT NULL,    -- timestamp (ms)
       is_deleted INTEGER NOT NULL DEFAULT 0, -- soft delete (0/1)
 
-      FOREIGN KEY (user_uid) REFERENCES profile(user_uid) ON DELETE CASCADE
+      FOREIGN KEY (user_uid) REFERENCES ${Tables.profile.name}(user_uid) ON DELETE CASCADE
       );''');
 
-    await db.execute('''CREATE TABLE attachments (
+    await db.execute('''CREATE TABLE ${Tables.attachments.name} (
       attachment_id TEXT PRIMARY KEY, -- eg: attachment_uuid
       task_id TEXT NOT NULL,          -- FK → tasks(task_id)
       user_uid TEXT NOT NULL,          -- FK → profile(user_uid)
@@ -70,12 +73,12 @@ class LocalDbHelper {
       updated_at INTEGER NOT NULL,    -- timestamp (ms)
       is_deleted INTEGER NOT NULL DEFAULT 0,
 
-      FOREIGN KEY (task_id) REFERENCES tasks(task_id) ON DELETE CASCADE,
-      FOREIGN KEY (user_uid) REFERENCES profile(user_uid) ON DELETE CASCADE
+      FOREIGN KEY (task_id) REFERENCES ${Tables.tasks.name}(task_id) ON DELETE CASCADE,
+      FOREIGN KEY (user_uid) REFERENCES ${Tables.profile.name}(user_uid) ON DELETE CASCADE
       );''');
 
     // 1. Create the table first
-    await db.execute('''CREATE TABLE pending_operations (
+    await db.execute('''CREATE TABLE ${Tables.pendingOperations.name} (
       pending_operations_id TEXT PRIMARY KEY,  -- eg:pendOps_uuid
 
       entity_type TEXT NOT NULL,      -- "TASK", "ATTACHMENT", "PROFILE"
@@ -96,18 +99,20 @@ class LocalDbHelper {
 
     // 2. Create the index in a separate statement
     await db.execute('''CREATE INDEX idx_pending_entity_id 
-      ON pending_operations(entity_id);''');
+      ON ${Tables.pendingOperations}(entity_id);''');
   }
 
   Future<ThemeMode> getThemeMode() async {
     final db = await database;
 
-    List<Map> maps = await db.query('profile',
-        columns: ["theme_mode"]);
+    List<Map<String, dynamic>> maps = await db.query(
+      Tables.profile.name,
+      columns: ["theme_mode"],
+    );
 
-    if (maps.isNotEmpty) {
+    if (maps.isNotEmpty && maps.first["theme_mode"] != null) {
       return EnumDb.fromDb(ThemeMode.values, maps.first["theme_mode"]);
-  }
+    }
     return ThemeMode.system;
   }
 
@@ -115,6 +120,6 @@ class LocalDbHelper {
     String themeModeStr = EnumDb.toDb(themeMode);
     final db = await database;
 
-    db.rawInsert('INSERT INTO profile(theme_mode) VALUES($themeModeStr)');
+    await db.update(Tables.profile.name, {'theme_mode': themeModeStr});
   }
 }

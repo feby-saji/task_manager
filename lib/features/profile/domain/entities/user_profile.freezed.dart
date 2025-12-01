@@ -14,8 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfile {
 
- String get uid;// Supabase UID
- String? get name; String? get email; DateTime get lastSyncedTime; ThemeMode get themeMode; String get preferredLanguageCode;
+ String get userId; String? get displayName; String? get email; String? get photoUrl; String get preferredLanguageCode;// e.g., 'en', 'es', 'fr'
+ ThemeMode get themeMode; String? get lastSync;
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.email, email) || other.email == email)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,uid,name,email,lastSyncedTime,themeMode,preferredLanguageCode);
+int get hashCode => Object.hash(runtimeType,userId,displayName,email,photoUrl,preferredLanguageCode,themeMode,lastSync);
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
+  return 'UserProfile(userId: $userId, displayName: $displayName, email: $email, photoUrl: $photoUrl, preferredLanguageCode: $preferredLanguageCode, themeMode: $themeMode, lastSync: $lastSync)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UserProfileCopyWith<$Res>  {
   factory $UserProfileCopyWith(UserProfile value, $Res Function(UserProfile) _then) = _$UserProfileCopyWithImpl;
 @useResult
 $Res call({
- String uid, String? name, String? email, DateTime lastSyncedTime, ThemeMode themeMode, String preferredLanguageCode
+ String userId, String? displayName, String? email, String? photoUrl, String preferredLanguageCode, ThemeMode themeMode, String? lastSync
 });
 
 
@@ -63,15 +63,16 @@ class _$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? displayName = freezed,Object? email = freezed,Object? photoUrl = freezed,Object? preferredLanguageCode = null,Object? themeMode = null,Object? lastSync = freezed,}) {
   return _then(_self.copyWith(
-uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String?,lastSyncedTime: null == lastSyncedTime ? _self.lastSyncedTime : lastSyncedTime // ignore: cast_nullable_to_non_nullable
-as DateTime,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
-as ThemeMode,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
-as String,
+as String?,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
+as String,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as ThemeMode,lastSync: freezed == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId,  String? displayName,  String? email,  String? photoUrl,  String preferredLanguageCode,  ThemeMode themeMode,  String? lastSync)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.userId,_that.displayName,_that.email,_that.photoUrl,_that.preferredLanguageCode,_that.themeMode,_that.lastSync);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.them
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId,  String? displayName,  String? email,  String? photoUrl,  String preferredLanguageCode,  ThemeMode themeMode,  String? lastSync)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile():
-return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.userId,_that.displayName,_that.email,_that.photoUrl,_that.preferredLanguageCode,_that.themeMode,_that.lastSync);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.them
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String? name,  String? email,  DateTime lastSyncedTime,  ThemeMode themeMode,  String preferredLanguageCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId,  String? displayName,  String? email,  String? photoUrl,  String preferredLanguageCode,  ThemeMode themeMode,  String? lastSync)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.themeMode,_that.preferredLanguageCode);case _:
+return $default(_that.userId,_that.displayName,_that.email,_that.photoUrl,_that.preferredLanguageCode,_that.themeMode,_that.lastSync);case _:
   return null;
 
 }
@@ -212,16 +213,17 @@ return $default(_that.uid,_that.name,_that.email,_that.lastSyncedTime,_that.them
 
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.uid, this.name, this.email, required this.lastSyncedTime, required this.themeMode, this.preferredLanguageCode = 'en'});
+   _UserProfile({required this.userId, required this.displayName, required this.email, required this.photoUrl, this.preferredLanguageCode = 'en', required this.themeMode, required this.lastSync});
   
 
-@override final  String uid;
-// Supabase UID
-@override final  String? name;
+@override final  String userId;
+@override final  String? displayName;
 @override final  String? email;
-@override final  DateTime lastSyncedTime;
-@override final  ThemeMode themeMode;
+@override final  String? photoUrl;
 @override@JsonKey() final  String preferredLanguageCode;
+// e.g., 'en', 'es', 'fr'
+@override final  ThemeMode themeMode;
+@override final  String? lastSync;
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ _$UserProfileCopyWith<_UserProfile> get copyWith => __$UserProfileCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.lastSyncedTime, lastSyncedTime) || other.lastSyncedTime == lastSyncedTime)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.email, email) || other.email == email)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.preferredLanguageCode, preferredLanguageCode) || other.preferredLanguageCode == preferredLanguageCode)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.lastSync, lastSync) || other.lastSync == lastSync));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,uid,name,email,lastSyncedTime,themeMode,preferredLanguageCode);
+int get hashCode => Object.hash(runtimeType,userId,displayName,email,photoUrl,preferredLanguageCode,themeMode,lastSync);
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, name: $name, email: $email, lastSyncedTime: $lastSyncedTime, themeMode: $themeMode, preferredLanguageCode: $preferredLanguageCode)';
+  return 'UserProfile(userId: $userId, displayName: $displayName, email: $email, photoUrl: $photoUrl, preferredLanguageCode: $preferredLanguageCode, themeMode: $themeMode, lastSync: $lastSync)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$UserProfileCopyWith<$Res> implements $UserProfileCopyWith
   factory _$UserProfileCopyWith(_UserProfile value, $Res Function(_UserProfile) _then) = __$UserProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String uid, String? name, String? email, DateTime lastSyncedTime, ThemeMode themeMode, String preferredLanguageCode
+ String userId, String? displayName, String? email, String? photoUrl, String preferredLanguageCode, ThemeMode themeMode, String? lastSync
 });
 
 
@@ -270,15 +272,16 @@ class __$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? name = freezed,Object? email = freezed,Object? lastSyncedTime = null,Object? themeMode = null,Object? preferredLanguageCode = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? displayName = freezed,Object? email = freezed,Object? photoUrl = freezed,Object? preferredLanguageCode = null,Object? themeMode = null,Object? lastSync = freezed,}) {
   return _then(_UserProfile(
-uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String?,lastSyncedTime: null == lastSyncedTime ? _self.lastSyncedTime : lastSyncedTime // ignore: cast_nullable_to_non_nullable
-as DateTime,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
-as ThemeMode,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
-as String,
+as String?,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,preferredLanguageCode: null == preferredLanguageCode ? _self.preferredLanguageCode : preferredLanguageCode // ignore: cast_nullable_to_non_nullable
+as String,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as ThemeMode,lastSync: freezed == lastSync ? _self.lastSync : lastSync // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

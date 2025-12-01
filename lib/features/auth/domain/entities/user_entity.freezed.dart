@@ -14,8 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthUser {
 
- String get uuid;// for guest user -> local_guest else Supabase UUID
- String get email;
+ dynamic get userId; AuthProvider get authProvider;
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +25,16 @@ $AuthUserCopyWith<AuthUser> get copyWith => _$AuthUserCopyWithImpl<AuthUser>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&(identical(other.uuid, uuid) || other.uuid == uuid)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&const DeepCollectionEquality().equals(other.userId, userId)&&(identical(other.authProvider, authProvider) || other.authProvider == authProvider));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,uuid,email);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(userId),authProvider);
 
 @override
 String toString() {
-  return 'AuthUser(uuid: $uuid, email: $email)';
+  return 'AuthUser(userId: $userId, authProvider: $authProvider)';
 }
 
 
@@ -46,7 +45,7 @@ abstract mixin class $AuthUserCopyWith<$Res>  {
   factory $AuthUserCopyWith(AuthUser value, $Res Function(AuthUser) _then) = _$AuthUserCopyWithImpl;
 @useResult
 $Res call({
- String uuid, String email
+ dynamic userId, AuthProvider authProvider
 });
 
 
@@ -63,11 +62,11 @@ class _$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uuid = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = freezed,Object? authProvider = null,}) {
   return _then(_self.copyWith(
-uuid: null == uuid ? _self.uuid : uuid // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as dynamic,authProvider: null == authProvider ? _self.authProvider : authProvider // ignore: cast_nullable_to_non_nullable
+as AuthProvider,
   ));
 }
 
@@ -152,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uuid,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( dynamic userId,  AuthProvider authProvider)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.uuid,_that.email);case _:
+return $default(_that.userId,_that.authProvider);case _:
   return orElse();
 
 }
@@ -173,10 +172,10 @@ return $default(_that.uuid,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uuid,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( dynamic userId,  AuthProvider authProvider)  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser():
-return $default(_that.uuid,_that.email);case _:
+return $default(_that.userId,_that.authProvider);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +192,10 @@ return $default(_that.uuid,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uuid,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( dynamic userId,  AuthProvider authProvider)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.uuid,_that.email);case _:
+return $default(_that.userId,_that.authProvider);case _:
   return null;
 
 }
@@ -208,12 +207,11 @@ return $default(_that.uuid,_that.email);case _:
 
 
 class _AuthUser implements AuthUser {
-  const _AuthUser({required this.uuid, required this.email});
+  const _AuthUser({required this.userId, required this.authProvider});
   
 
-@override final  String uuid;
-// for guest user -> local_guest else Supabase UUID
-@override final  String email;
+@override final  dynamic userId;
+@override final  AuthProvider authProvider;
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +223,16 @@ _$AuthUserCopyWith<_AuthUser> get copyWith => __$AuthUserCopyWithImpl<_AuthUser>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&(identical(other.uuid, uuid) || other.uuid == uuid)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&const DeepCollectionEquality().equals(other.userId, userId)&&(identical(other.authProvider, authProvider) || other.authProvider == authProvider));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,uuid,email);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(userId),authProvider);
 
 @override
 String toString() {
-  return 'AuthUser(uuid: $uuid, email: $email)';
+  return 'AuthUser(userId: $userId, authProvider: $authProvider)';
 }
 
 
@@ -245,7 +243,7 @@ abstract mixin class _$AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res>
   factory _$AuthUserCopyWith(_AuthUser value, $Res Function(_AuthUser) _then) = __$AuthUserCopyWithImpl;
 @override @useResult
 $Res call({
- String uuid, String email
+ dynamic userId, AuthProvider authProvider
 });
 
 
@@ -262,11 +260,11 @@ class __$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? uuid = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = freezed,Object? authProvider = null,}) {
   return _then(_AuthUser(
-uuid: null == uuid ? _self.uuid : uuid // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as dynamic,authProvider: null == authProvider ? _self.authProvider : authProvider // ignore: cast_nullable_to_non_nullable
+as AuthProvider,
   ));
 }
 
