@@ -4,7 +4,7 @@ import '../../../../core/utils/enums.dart';
 class AuthLocalDataSource {
   late LocalDatabaseService localDbService;
 
-  AuthLocalDataSource(localDbService);
+  AuthLocalDataSource(this.localDbService);
 
   Future clearAllData() async {
     // called at end of signOut method

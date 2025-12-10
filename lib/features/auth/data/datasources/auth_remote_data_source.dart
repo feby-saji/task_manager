@@ -1,11 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../core/services/local_database.dart';
+import 'package:task_manager/core/services/remote_database.dart';
 
 class AuthRemoteDataSource {
-  late Provider<LocalDatabaseService> localDbService;
+  late RemoteDbService remoteDbService;
 
-  AuthRemoteDataSource(localDbService);
+  AuthRemoteDataSource(this.remoteDbService);
 
-
+  Future signInAnonymously() async {
+    return await remoteDbService.supabaseClient.auth.signInAnonymously();
+  }
 }
