@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum AuthProvider {
   google('google'),
   apple('apple'),
-  guest('guest'),
+  anonymous('anonymous'),
   email('email'),
   unknown('unknown');
 

@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_manager/core/failures.dart';
+import 'package:task_manager/core/utils/enums.dart';
 import 'package:task_manager/features/auth/data/datasources/auth_local_data_source.dart';
-import 'package:task_manager/features/auth/domain/entities/user_entity.dart';
+import 'package:task_manager/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:task_manager/features/auth/domain/entities/user_entity.dart'
+    as entity;
 import 'package:task_manager/features/auth/domain/repositories/auth_repository.dart';
 
-import '../datasources/auth_remote_data_source.dart';
-
-class AuthRepositoryImpl extends AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource authLocalDataSource;
   final AuthRemoteDataSource authRemoteDataSource;
 
@@ -16,33 +20,79 @@ class AuthRepositoryImpl extends AuthRepository {
   });
 
   @override
-  Future<String> getUserUid() {
-    // if authenticated get from supabase
-    // TODO: implement getUserUid
-    throw UnimplementedError();
-    // else return null
+  TaskEither<Failure, entity.AuthUser> signInAnonymous() {
+    return TaskEither.tryCatch(() async {
+      final AuthResponse authResponse = await authRemoteDataSource
+          .signInAnonymously();
+      final Session? session = authResponse.session;
+
+      if (session == null) {
+        throw InvalidSessionFailure('Session is null');
+      }
+
+      return entity.AuthUser(
+        userId: session,
+        authProvider: _mapProvider(session),
+      );
+    }, (err, _) => _mapError(err));
   }
 
   @override
-  Future<Either<AuthFailure, AuthUser>> signInAsGuest() {
-    // TODO: implement signInAsGuest
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> signInUsingGoogle() {
+  TaskEither<Failure, entity.AuthUser> signInUsingGoogle() {
     // TODO: implement signInUsingGoogle
     throw UnimplementedError();
   }
 
   @override
-  Future<void> signOut() async {
-    await authLocalDataSource.clearAllData();
+  TaskEither<Failure, void> signOut() {
+    // TODO: implement signInUsingGoogle
+    throw UnimplementedError();
+    // authLocalDataSource.clearAllData();
   }
 
   @override
-  Future<bool> userLoggedInStatus() {
-    // TODO: implement userLoggedInStatus
-    throw UnimplementedError();
+  Stream<entity.AuthUser?> authStateChanges() {
+    return Supabase.instance.client.auth.onAuthStateChange.map((data) {
+      final session = data.session;
+
+      if (session == null) return null;
+
+      return entity.AuthUser(
+        userId: session.user.id,
+        authProvider: _mapProvider(session),
+      );
+    });
+  }
+
+  AuthProvider _mapProvider(Session session) {
+    if (session.user.isAnonymous) {
+      return AuthProvider.anonymous;
+    }
+
+    final identities = session.user.identities;
+    final provider = identities?.last.provider;
+
+    switch (provider) {
+      case 'email':
+        return AuthProvider.email;
+      case 'google':
+        return AuthProvider.google;
+      default:
+        return AuthProvider.unknown;
+    }
+  }
+
+  Failure _mapError(Object error) {
+    if (error is AuthException) {
+      return AuthServerFailure(error.toString());
+    } else if (error is SocketException) {
+      return NetworkFailure();
+    } else if (error is PostgrestException) {
+      return SupabasePermissionFailure(
+        'PostgrestException in supabase. eg: table RLS, access denied',
+      );
+    } else {
+      return UnknownFailure(error.toString());
+    }
   }
 }
