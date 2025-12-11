@@ -83,4 +83,6 @@ enum PendingStatus {
   const PendingStatus(this.label);
 }
 
+enum SnackBarType { success, error, info }
+
 enum Tables { tasks, attachments, profile, pendingOperations }

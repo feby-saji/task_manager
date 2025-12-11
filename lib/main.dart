@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_manager/core/app_initializer.dart';
@@ -38,11 +37,6 @@ class MyApp extends ConsumerWidget {
       themeMode: themeMode,
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        ...context.localizationDelegates,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: context.supportedLocales,
     );
   }
 }
