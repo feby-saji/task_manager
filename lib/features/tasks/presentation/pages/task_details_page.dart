@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TaskDetailsPage extends StatelessWidget {
-  const TaskDetailsPage({super.key});
+  final String taskId;
+
+  const TaskDetailsPage({super.key, required this.taskId});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(body: Text('task detail'));
   }
 }

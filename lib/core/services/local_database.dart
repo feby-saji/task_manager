@@ -99,7 +99,7 @@ class LocalDatabaseService {
 
     // 2. Create the index in a separate statement
     await db.execute('''CREATE INDEX idx_pending_entity_id 
-      ON ${Tables.pendingOperations}(entity_id);''');
+      ON ${Tables.pendingOperations.name}(entity_id);''');
   }
 
   Future<ThemeMode> getThemeMode() async {
@@ -111,13 +111,13 @@ class LocalDatabaseService {
     );
 
     if (maps.isNotEmpty && maps.first["theme_mode"] != null) {
-      return EnumDb.fromDb(ThemeMode.values, maps.first["theme_mode"]);
+      return EnumDbExt.fromDb(ThemeMode.values, maps.first["theme_mode"]);
     }
     return ThemeMode.system;
   }
 
   Future<void> saveThemeMode(ThemeMode themeMode) async {
-    String themeModeStr = EnumDb.toDb(themeMode);
+    String themeModeStr = EnumDbExt.toDb(themeMode);
     final db = await database;
 
     await db.update(Tables.profile.name, {'theme_mode': themeModeStr});

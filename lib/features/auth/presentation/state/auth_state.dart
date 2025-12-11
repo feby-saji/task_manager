@@ -1,19 +1,23 @@
-sealed class AuthState {
-  const AuthState();
+import 'package:task_manager/features/auth/domain/entities/user_entity.dart';
+
+sealed class AuthStateR {
+  const AuthStateR();
 }
 
-class InitialAuthState extends AuthState {
+class InitialAuthState extends AuthStateR {
   const InitialAuthState();
 }
 
-class LoadingAuthState extends AuthState {
+class LoadingAuthState extends AuthStateR {
   const LoadingAuthState();
 }
 
-class AuthSuccessState extends AuthState {
-  const AuthSuccessState();
+class AuthSuccessState extends AuthStateR {
+  AuthUser user;
+
+  AuthSuccessState(this.user);
 }
 
-class AuthFailureState extends AuthState {
+class AuthFailureState extends AuthStateR {
   const AuthFailureState();
 }

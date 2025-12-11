@@ -5,8 +5,8 @@ import 'package:task_manager/features/auth/data/datasources/auth_local_data_sour
 import 'package:task_manager/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:task_manager/features/auth/data/repositories/auth_repository_impl.dart';
 
-import '../../../../core/failures.dart';
 import '../../../../core/services/local_database.dart';
+import '../../../../core/utils/failures.dart';
 import '../entities/user_entity.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {

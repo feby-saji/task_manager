@@ -54,30 +54,22 @@ extension UiExt on BuildContext {
         iconData = Icons.error_outline;
         break;
       case SnackBarType.info:
-      default:
-        // Using a slightly toned-down primary color for info.
-        backgroundColor = colorScheme.primary.withOpacity(0.9);
+        backgroundColor = colorScheme.primary.withValues(alpha: 0.9);
         iconData = Icons.info_outline;
         break;
     }
 
-    // For high contrast, we'll use a white text color on the colored backgrounds.
     textColor = Colors.white;
 
-    // Hide the current snackbar if one is showing.
     ScaffoldMessenger.of(this).hideCurrentSnackBar();
 
-    // Show the new snackbar.
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         backgroundColor: backgroundColor,
-        // For a modern look, we make the snackbar float above the content.
         behavior: SnackBarBehavior.floating,
-        // Rounded corners are a standard modern design element.
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        // Add a margin to the floating snackbar.
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         content: Row(
           children: [
