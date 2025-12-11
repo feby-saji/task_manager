@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,15 +10,24 @@ import 'package:task_manager/core/theme/app_theme.dart';
 void main() async {
   await AppInitializer.initialize();
   runApp(
-    ProviderScope(
-      observers: [ProviderLogger()],
-      child: EasyLocalization(
-        supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
-        path: 'assets/translations',
-        fallbackLocale: Locale('en', 'US'),
-        startLocale: Locale('en', 'US'),
-        child: MyApp(),
-      ),
+    DevicePreview(
+      enabled: true,
+      tools: const [
+        ...DevicePreview.defaultTools,
+        // CustomPlugin(),
+      ],
+      builder: (context) {
+        return ProviderScope(
+          observers: [ProviderLogger()],
+          child: EasyLocalization(
+            supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
+            path: 'assets/translations',
+            fallbackLocale: Locale('en', 'US'),
+            startLocale: Locale('en', 'US'),
+            child: MyApp(),
+          ),
+        );
+      },
     ),
   );
 }
@@ -31,6 +41,8 @@ class MyApp extends ConsumerWidget {
     final goRouter = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Task Manager',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

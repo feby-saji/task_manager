@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:task_manager/core/failures.dart';
 import 'package:task_manager/core/utils/enums.dart';
 import 'package:task_manager/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:task_manager/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:task_manager/features/auth/domain/entities/user_entity.dart'
     as entity;
 import 'package:task_manager/features/auth/domain/repositories/auth_repository.dart';
+
+import '../../../../core/utils/failures.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource authLocalDataSource;

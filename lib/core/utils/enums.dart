@@ -86,3 +86,5 @@ enum PendingStatus {
 enum SnackBarType { success, error, info }
 
 enum Tables { tasks, attachments, profile, pendingOperations }
+
+enum LoginButtonType { google, anonymous }

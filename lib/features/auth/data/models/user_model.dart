@@ -23,7 +23,7 @@ class AuthUserModel {
   AuthUser toDomain() {
     return AuthUser(
       userId: userId,
-      authProvider: EnumDb.fromDb(AuthProvider.values, authProvider),
+      authProvider: EnumDbExt.fromDb(AuthProvider.values, authProvider),
     );
   }
 }
