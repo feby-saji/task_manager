@@ -1,0 +1,9 @@
+{
+"hello_world": "Hello World!",
+"welcome_message": "Welcome, {name}!",
+"task_title": "Task",
+"task_description": "Description of the task.",
+"sync_button_text": "Sync Now",
+"sync_status_available": "Synchronization is available.",
+"sync_status_not_logged_in": "Please log in to sync."
+}
