@@ -1,29 +1,53 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_manager/presentation/theme/app_theme.dart';
-import 'presentation/router/app_router.dart';
-import 'presentation/providers/theme_provider.dart';
+import 'package:task_manager/core/app_initializer.dart';
+import 'package:task_manager/core/loggers/riverpod_state_observe.dart';
+import 'package:task_manager/core/router/go_router.dart';
+import 'package:task_manager/core/theme/app_theme.dart';
 
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+void main() async {
+  await AppInitializer.initialize();
+  runApp(
+    DevicePreview(
+      enabled: true,
+      tools: const [
+        ...DevicePreview.defaultTools,
+        // CustomPlugin(),
+      ],
+      builder: (context) {
+        return ProviderScope(
+          observers: [ProviderLogger()],
+          child: EasyLocalization(
+            supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
+            path: 'assets/translations',
+            fallbackLocale: Locale('en', 'US'),
+            startLocale: Locale('en', 'US'),
+            child: MyApp(),
+          ),
+        );
+      },
+    ),
+  );
 }
-
-
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeProvider);
+    final themeMode = ref.watch(themeNotifierProvider);
+    final goRouter = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Task Manager',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
-      routerConfig: appRouter,
+      routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
     );
   }
