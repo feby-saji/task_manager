@@ -23,7 +23,7 @@ extension AppNavigationExt on BuildContext {
 
   void goToLogin() => go(AppRoutes.login);
 
-  void goToProfile() => push(AppRoutes.profile);
+  // void goToProfile() => push(AppRoutes.profile);
 
   void goToTask(String taskId) => push(AppRoutes.taskDetails(taskId));
 
