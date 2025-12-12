@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/utils/enums.dart';
 
@@ -18,7 +19,7 @@ class LoginButton extends StatelessWidget {
     switch (type) {
       case LoginButtonType.google:
         text = "Sign in with Google";
-        icon = Image.asset("assets/icons/google.png", height: 22);
+        icon = const Icon(FontAwesomeIcons.google, size: 22);
         bgColor = Colors.white;
         fgColor = Colors.black87;
         break;

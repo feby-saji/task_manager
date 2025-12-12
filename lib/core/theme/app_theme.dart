@@ -5,21 +5,24 @@ import 'package:task_manager/core/services/local_database.dart';
 
 class ThemeNotifier extends StateNotifier<ThemeMode> {
   final Ref _ref;
+
   ThemeNotifier(this._ref) : super(ThemeMode.system) {
     _loadThemeMode();
   }
-  _loadThemeMode() async{
+
+  _loadThemeMode() async {
     final db = _ref.read(localDbProvider);
     state = await db.getThemeMode();
   }
-  void changeTheme(ThemeMode themeMode) async{
-  state = themeMode;
-  final db = _ref.read(localDbProvider);
-  await db.saveThemeMode(themeMode);
+
+  void changeTheme(ThemeMode themeMode) async {
+    state = themeMode;
+    final db = _ref.read(localDbProvider);
+    await db.saveThemeMode(themeMode);
   }
 }
 
-final themeNotifierProvider = StateNotifierProvider<ThemeNotifier,ThemeMode>(
+final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
   (ref) => ThemeNotifier(ref),
 );
 
@@ -101,6 +104,20 @@ class AppTheme {
       error: AppColors.lightError,
       surface: AppColors.lightBackground,
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.lightBackground,
+      // White (#FFFFFF)
+      selectedItemColor: AppColors.lightPrimary,
+      // Blue (#3B82F6)
+      unselectedItemColor: AppColors.lightTextSecondary,
+      // Gray (#666 / #999)
+      selectedIconTheme: IconThemeData(color: AppColors.lightPrimary),
+      unselectedIconTheme: IconThemeData(color: AppColors.lightTextSecondary),
+      selectedLabelStyle: TextStyle(color: AppColors.lightPrimary),
+      unselectedLabelStyle: TextStyle(color: AppColors.lightTextSecondary),
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+    ),
   );
 
   /// Dark theme
@@ -159,6 +176,20 @@ class AppTheme {
       secondary: AppColors.darkPrimary,
       error: AppColors.darkError,
       surface: AppColors.darkBackground,
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.darkBackground,
+      // (#1F2937)
+      selectedItemColor: AppColors.darkPrimary,
+      // Blue (#60A5FA)
+      unselectedItemColor: AppColors.darkTextSecondary,
+      // Gray (#A0AEC0)
+      selectedIconTheme: IconThemeData(color: AppColors.darkPrimary),
+      unselectedIconTheme: IconThemeData(color: AppColors.darkTextSecondary),
+      selectedLabelStyle: TextStyle(color: AppColors.darkPrimary),
+      unselectedLabelStyle: TextStyle(color: AppColors.darkTextSecondary),
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
     ),
   );
 }
