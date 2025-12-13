@@ -12,12 +12,12 @@ class LoadingAuthState extends AuthStateR {
   const LoadingAuthState();
 }
 
-class AuthSuccessState extends AuthStateR {
+class AuthenticatedState extends AuthStateR {
   AuthUser user;
 
-  AuthSuccessState(this.user);
+  AuthenticatedState(this.user);
 }
 
-class AuthFailureState extends AuthStateR {
-  const AuthFailureState();
+class UnAuthenticatedState extends AuthStateR {
+  const UnAuthenticatedState();
 }

@@ -44,7 +44,7 @@ final goRouterProvider = Provider((ref) {
 });
 
 String? authRedirect(GoRouterState state, AuthStateR authState) {
-  final bool isLoggedIn = authState is AuthSuccessState;
+  final bool isLoggedIn = authState is AuthenticatedState;
 
   final String currentPath = state.uri.path;
 
