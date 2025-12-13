@@ -18,7 +18,7 @@ class AuthNotifier extends Notifier<AuthStateR> {
 
   @override
   AuthStateR build() {
-    _authStateChangesUseCase = ref.read(authStateChangesUseCaseProvider);
+    _authStateChangesUseCase = ref.watch(authStateChangesUseCaseProvider);
     _signInAnonymousUseCase = ref.read(signInAnonymousUseCaseProvider);
     _subscription = _authStateChangesUseCase().listen(listenToAuthChanges);
     ref.onDispose(() {
@@ -29,9 +29,9 @@ class AuthNotifier extends Notifier<AuthStateR> {
 
   listenToAuthChanges(AuthUser? user) {
     if (user == null) {
-      state = AuthFailureState();
+      state = UnAuthenticatedState();
     } else {
-      state = AuthSuccessState(user);
+      state = AuthenticatedState(user);
     }
   }
 
@@ -39,8 +39,8 @@ class AuthNotifier extends Notifier<AuthStateR> {
     state = const LoadingAuthState();
     final result = await _signInAnonymousUseCase().run();
     result.fold(
-      (failure) => state = AuthFailureState(),
-      (user) => state = AuthSuccessState(user),
+      (failure) => state = UnAuthenticatedState(),
+      (user) => state = AuthenticatedState(user),
     );
   }
 }
