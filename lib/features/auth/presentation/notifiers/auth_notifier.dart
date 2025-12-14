@@ -1,46 +1,76 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_manager/features/auth/domain/usecases/auth_state_changes_usecase.dart';
-import 'package:task_manager/features/auth/domain/usecases/login_guest_usecase.dart';
+import 'package:go_router/go_router.dart';
+import 'package:task_manager/features/auth/presentation/notifiers/providers.dart';
 
-import '../../domain/entities/user_entity.dart';
+import '../../../../core/router/app_routes.dart';
+import '../../domain/usecases/signin_anonymous_usecase.dart';
 import '../state/auth_state.dart';
 
-final authNotifierProvider = NotifierProvider<AuthNotifier, AuthStateR>(
-  AuthNotifier.new,
-);
-
-class AuthNotifier extends Notifier<AuthStateR> {
-  late final AuthStateChangesUseCase _authStateChangesUseCase;
+class AuthNotifier extends Notifier<AuthState> implements Listenable {
   late final SignInAnonymousUseCase _signInAnonymousUseCase;
-  StreamSubscription<AuthUser?>? _subscription;
+
+  VoidCallback? _routerListener;
 
   @override
-  AuthStateR build() {
-    _authStateChangesUseCase = ref.watch(authStateChangesUseCaseProvider);
+  AuthState build() {
     _signInAnonymousUseCase = ref.read(signInAnonymousUseCaseProvider);
-    _subscription = _authStateChangesUseCase().listen(listenToAuthChanges);
-    ref.onDispose(() {
-      _subscription?.cancel();
+
+    ref.listen(userAuthChangesStreamProvider, (previous, next) {
+      if (next.hasValue) {
+        if (next.value == null) {
+          state = AuthStateUnauthenticated('User is Null');
+          _routerListener?.call();
+        } else {
+          state = AuthStateAuthenticated(next.value!);
+          _routerListener?.call();
+        }
+      } else if (next.hasError) {
+        state = AuthStateUnauthenticated(next.error.toString());
+        _routerListener?.call();
+      } else if (next.isLoading) {
+        state = const AuthStateAuthenticating();
+        _routerListener?.call();
+      }
     });
-    return InitialAuthState();
+
+    return AuthStateInitial();
   }
 
-  listenToAuthChanges(AuthUser? user) {
-    if (user == null) {
-      state = UnAuthenticatedState();
-    } else {
-      state = AuthenticatedState(user);
+  String? authRedirect(GoRouterState goRouterState) {
+    final bool isLoggedIn = state is AuthStateAuthenticated;
+
+    final String currentPath = goRouterState.uri.path;
+
+    final bool onLoginPage = currentPath == AppRoutes.login;
+    // final bool onMainPage = currentPath == AppRoutes.main;
+
+    if (!isLoggedIn && !onLoginPage) {
+      return AppRoutes.login;
     }
+
+    if (isLoggedIn && onLoginPage) {
+      return AppRoutes.main;
+    }
+
+    return null;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    _routerListener = listener;
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    _routerListener = null;
   }
 
   Future<void> signInAnonymous() async {
-    state = const LoadingAuthState();
+    state = const AuthStateAuthenticating();
     final result = await _signInAnonymousUseCase().run();
-    result.fold(
-      (failure) => state = UnAuthenticatedState(),
-      (user) => state = AuthenticatedState(user),
-    );
+    //   no need to handle states as the go router redirects through userAuthChangesStreamProvider
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_manager/core/utils/enums.dart';
-import 'package:task_manager/features/auth/presentation/notifiers/auth_notifier.dart';
+import 'package:task_manager/features/auth/presentation/notifiers/providers.dart';
 import 'package:task_manager/features/auth/presentation/widgets/login_btn.dart';
 
 class LoginPage extends ConsumerWidget {
