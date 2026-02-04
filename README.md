@@ -1,16 +1,37 @@
-# task_manager
+# Task Manager (Offline-First)
 
-A new Flutter project.
+A cross-platform offline-first Task Manager application built with Flutter.
 
-## Getting Started
+## Tech Stack
 
-This project is a starting point for a Flutter application.
+### Frontend
+- Flutter (Material 3)
+- Dart
 
-A few resources to get you started if this is your first Flutter project:
+### State Management
+- Riverpod
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Architecture
+- Clean Architecture
+- Feature-first folder structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Local Storage
+- Sqflite (offline persistence)
+
+### Backend
+- Supabase
+  - Authentication (Social & Anonymous)
+  - Realtime database
+  - Cloud storage (attachments)
+
+### Sync & Offline Handling
+- Offline-first data flow
+- Timestamp-based conflict resolution
+- Pending operations queue
+
+
+
+
+
+
+
