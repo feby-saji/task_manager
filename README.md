@@ -7,7 +7,7 @@ The project focuses on defining a scalable architecture for offline data handlin
 > This repository contains partially implemented features and architectural stubs.  
 > The README documents the **current implementation state** as well as the **intended design direction**.
 
-<img width="1102" height="398" alt="image" src="https://github.com/user-attachments/assets/95f6ef52-5dc6-4671-8e05-00badc1cd4d8" />
+<img width="1004" height="704" alt="image" src="https://github.com/user-attachments/assets/c2fc35e8-fc00-44e2-aeda-98dbadf641b0" />
 
 
 ---
