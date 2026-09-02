@@ -53,3 +53,7 @@ app.*.map.json
 **/GeneratedPluginRegistrant.java
 **/GeneratedPluginRegistrant.swift
 **/GeneratedPluginRegistrant.m
+
+
+# secrets
+lib/core/app_secrets.dart

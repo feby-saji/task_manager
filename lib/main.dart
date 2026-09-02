@@ -11,7 +11,7 @@ void main() async {
   await AppInitializer.initialize();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       tools: const [
         ...DevicePreview.defaultTools,
         // CustomPlugin(),
